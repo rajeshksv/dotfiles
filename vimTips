@@ -1,0 +1,363 @@
+Misc
+- May be its a nice idea not to customize heavily or install many plugins. Often, we end up remote debugging as well where plugins won't be there
+
+Nice Blogs
+
+vimtutor
+https://stackoverflow.com/questions/1218390/what-is-your-most-productive-shortcut-with-vim
+https://stackoverflow.com/questions/1737163/traversing-text-in-insert-mode/1737259
+https://vim.rtorr.com/
+https://external-preview.redd.it/o5uN_eIUUGQGWws7kEHErF54uHo1Jj9Igfk4mM0_3no.jpg?auto=webp&s=bf7216f1ecd51ba4356ffa691541b4ea9d5d4196
+http://vimcolors.com/
+Checkoug fzf
+https://github.com/tpope/vim-unimpaired/tree/master/doc
+gundo - Visual representation of vim undo stack
+Good vimrc link - https://github.com/dougblack/dougblack.io/blob/master/markdown/a-good-vimrc.md
+https://hackernoon.com/learning-vim-what-i-wish-i-knew-b5dca186bef7
+Language specific bindings
+Folds
+
+Vim plugin manager
+https://vimawesome.com/
+Vundle
+NeoBundle - Based on Vundle + More features
+VimPlug
+Pathogen
+
+Vim Distribution
+spf13-vim - Vim 
+dot-files - https://github.com/skwp/dotfiles
+=======================================================================================
+Nice ones
+
+. Repeat last command
+In insert mode, you can use ctrl o + command to execute one command in normal mode and jump
+back to insert mode
+Instead of escape to come back to command line mode, you can try ctrl c or ctrl [
+To insert same char on multiple lines Ctrl V + Select lines + I + <<whatever u want to insert> + Esc
+
+Basic syntax: 
+verb subject or [action] {number} [motion] or operator motion. Default action/operator being simple movement/navigation
+It can also be copy, cut, delete
+If you are doing j, it is actually 1j or navigate1j -> Move one line down
+Alternatively, d3w or dG means delete 3 words
+Visual mode works in different way. First selection and then action. Ex: Shift V, up/down and then delete
+
+
+To be more precise, it is object verb subject. Where object can be register Ex: "*y3j to copy next 3 lines
+Copy while file to clipboard gg"*yG
+========================================================================================
+Motion/Movement
+
+Basic Movements
+  character movement -  j h k l
+Horizontal Movements
+  word movement - w e b ge(word, end of word, back to beginning of word, back to end of word)
+  (word = letters, digits, underscores)
+  W E B gE (when WORDS have special characters)
+  (WORD = sequence of non-blank characters seperated with white space)
+  Numbered movement - 4w 4e
+  $ move to end of line
+  0/^ to start of line
+  fx jump to next occurance of x/char in line. F backward
+  tx jump till previous of next occurance of x
+  For next search result ; previous , (if not mapped as leader) 
+  :help motion.txt for more motions
+Vertical Movements
+  10j jump to 10th line - Relative
+  40G jump to 40th line - Absolute
+  G end of file
+  gg start of file
+  H, M, L - move to top, middle, bottom of screen (High, Medium, Low)
+  Ctrl f b d(half screen) u [ (esc mapping)
+  zt, zb, zz - move current line to top, bottom, middle of screen
+  gj - Move to next visual line rather than actual line. Useful if lines are big 
+  { } jump to previous, next paragraphs
+  ( ) jump to previous, next sentence
+  '( ') Jump to start of current sentence
+  '{ '} Jump to end of current sentence
+Search
+  Search char with in row - f{char} or t{char}
+  Search / (forward) ? (Backward) - Next result n  , N
+  Go to matching expression %
+  Find word under cursor * #
+  If you want to replace new lines, use \n. If you want to replace with new line, use \r
+Jump Lists
+  Ctrl o go back where you came from, Ctrl i forward
+====================================================================================================
+Operator/Action
+
+Operator can be d (delete) , c (change), y (yank/copy), i (insert), v visual selection
+di delete inside, yi yank inside (in docs, i is considered part of motion rather than command)
+x deleting current char
+u undo
+r<char> replacing current char
+R replace mode till you press escape key
+====================================================================================================
+Rules
+
+Verb Subject - Similar to k8s!
+<operator> <movement>
+or <operator><number><movement>
+
+Default operator being navigation Ex: 5w or 5j
+
+dw delete a word. Similarly dW, db, dB, de
+p paste - (d puts text in register, p pastes line from register)
+d3w will delete next 3 words
+delete 3 lines d3j
+dB deletes a word backward. But wierdly vim doesn't delete current char. Use dvB to delete
+(v toggles the "inclusiveness" or "exclusiveness" of a motion)
+diw, diW delete a world when cursor is inside word
+di{ or di} delete everything inside curly braces
+da{ will delete everything including curly braces
+d$ delete till end of line(D is shortcut). Similarly d^ delete till end of line
+vi{ selects all block visually. Similarly ciW changes entire word and puts in insert mode
+dt/ will delete forward everything till / (except /) 
+df/ will delete forward till / (including)
+dT/ dF/ will delete backward
+d/foo - delete till from current line to next line containing foo
+Some actions are very frequent, that they don't need motion
+dd delete a line (Kind of a shortcut)
+yy - yank whole line
+cw change word, cc or C change line, ce from cursor to end of word, c$ end of line
+Insert - 30 times: 30i-
+dap for deleting paragraphs
+das for deleting sentence. Only diff between das and dis is das deletes with whitespace
+
+u undo
+U undo changes in whole line
+========================================================================================
+Insert Mode
+
+i insert mode at current char, I insert mode at beginning of line
+a insert mode after current char, A inser mode at end of line
+o open a line and insert in append mode below current line. For above line, O
+Ctrl-o escapes user to do one normal-mode command, and then return to the insert mode
+Ctrl W deletes last word, Ctrl U deletes till beginning of line
+To delete next word, Ctrl o + de
+ZZ = wq
+ZQ = q!
+
+Normal Mode
+u undo
+To delete next word, you need custom mapping - :imap <C-d> <C-[> dawi
+":h diw" has lot of nice shortcuts 
+Ctrl R redo
+Ctrl+C exits of colon, search mode easily
+
+~ change case
+== fix indent line
+to see spl characters :set list
+:set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+
+To type Ctrl M, Do Ctrl V M
+
+Visual Mode
+
+Pressing v starts visual selection from given cursor.
+Selecting text using v, now use arrow marks and can use operators like d (delete) , y
+Also use Ctrl V (for selecting columns) or Shift V (for selecting whole line)
+Comment/Uncomment multiple lines
+Ctrl V (visual mode)
+Use arrow keys to select multiple lines
+Shift I (insert mode) + character (say #)
+Press Esc
+
+Ctrl V
+Use arrow keys to select multiple lines
+x
+Press Esc
+========================================================================================
+Working with multiple files - Tabs and splits are very common
+
+Tabs, Splits, buffers, windows
+:sp file, :vsp file opens a file in new buffer and splits window
+ctrl ww to switch between splits
+
+:tabe file will opens a file in new tab
+:tabp :tabn tabs stuff
+gt gT to switch between tabs
+#gt go to tab #
+ctrl w[hjkl] to move between splits
+ctrl w[vs] to split window alternatively
+
+:tabe file will opens a file in new tab
+:tabp :tabn tabs stuff
+gt gT to switch between tabs
+#gt go to tab #
+
+:e file will opens a file in new buffer but in same window
+:buffers (list buffers) stuff
+:b3 -> Switch to 3rd buffer
+:bp :bn :bd 
+:b <Tab> to navigate among buffers (space is important)
+:b# to switch to previous buffer. Alternatively, ctrl ^ to switch between buffers
+<num>ctrl^ to move to a given buffer
+
+Unlike other apps, window doesn't contain tabs. Instead its opposite
+- A buffer is a in-memory copy of file
+- A window is what enables you to see a buffer
+  - When you do vsplit or hsplit, it opens another window but pointing to first buffer. Hence,
+    even in second window, you see changes done in first buffer
+- A tab is a collection of windows
+  - One tab can have a layout of 2 windows in vsplit. One tab can have a layout of 2 windows in hsplit
+  - Essentially, a tab contains multiple windows. Note the difference.
+  - If you open a new tab with same file, then you will see same buffer
+- Summary. Use Buffers like Tabs. 
+
+Note: Just remember though, if you are using a single tab for each file, 
+that isn’t how tabs in Vim were designed to be used.
+
+----------------------------------------------------------------------------------------------
+Misc
+
+Create a new file, delete, rename files easily in VIM using NERD Plugin (m)
+:e to reload file, :e! discard changes and reload
+:%s/pattern//n - Display number of occurances
+:%s/foo/bar/. If you want to use newline in foo, use \n. In bar use \r
+%s#/lib#/new#gc - If search replace string contains /, then use # as delimiter
+:% = :1,$
+:%!sort sorts all lines
+
+Autocomplete 
+CtrlX CtrlN for completing word
+CtrlX CtrlL for completing line
+
+Folding
+You can fold/unfold for better readability. Ex: JSON, YAML, XML
+set filetype=json # optional
+set foldmethod=syntax # can also be indent
+syntax on
+zo (open), zc (close), za (toggle) fold
+zR (open all folds), zM (close all folds)
+
+For XML its a bit wierd,
+let g:xml_syntax_folding=1
+set foldmethod=syntax
+syntax on
+
+Default Working Directory
+Vim uses the directory that you opened Vim in as the default working directory
+Check by :pwd
+If you want to change :cd /tmp
+To set working directory always same as the file you are editing - set autochdir. Rather than setting this in vimrc which might break plugins, use it when needed
+For ondemand changes, u can use mappings as well nnoremap <leader>cd :cd %:p:h<CR>:pwd<CR>
+(https://vim.fandom.com/wiki/Set_working_directory_to_the_current_file)
+Useful when you are opening another file in directory
+http://inlehmansterms.net/2014/09/04/sane-vim-working-directories/
+
+Filetype
+Vim detects the type of file that is edited by checking the file name or inspecting the contents of the file for specific text
+You can set manually as well :set ft=yaml
+To see, what is the current value of file type, then :echo &ft
+
+
+Registers
+Object Verb Subject
+Registers are used using "a syntax
+"byy yanks current line to b register
+Now "bp paste b register
+:reg show registers
+"+yy or "*yy copy line to clipboard. Copying to * register copies to clipboard
+V"*y copies selected text to clipboard
+Whenever you copy,delete,cut a line, it gets saved to register "1 - "9. So to do multiple copy, paste its nice
+When you use dd, it gets saved to default register " and when you do p it gets pasted from it
+
+Jump Lists
+vim recognises some movements as jump movements and store them in jump list. 
+Advantage with jump list is you can move front/back with in jump list
+Ctrl O, Ctrl I to move to older jump, newer jump
+To see all jumps :jumps
+To explicitly save a jump set a mark using m
+Jump movements - nG, H, M, L, %, {}, (), [{ ]}, [[ ]]
+ma marks current position as mark 'a'
+Now 'a will move to start of line containing the mark a
+`a will move to mark position
+
+Plugins
+:help easymotion
+Easymotion uses standard motions - j k l h w b e etc
+<leader><leader>w
+<leader><leader>fo
+<leader><leader>s For search a char anywhere in file
+sfd - Search for fd (two chars)
+
+Sessions
+:mksession to create a session - Useful when you want to save group of windows and want to reopen again
+Top reopen again vim -S
+
+Remote File
+vim scp://rajesh.kaki@10.50.66.139//tmp/run8
+-----------------------------------------------------------------------------------------------------------------------------------
+Vimrc Internals
+Reload vimrc config - :source ~/.vimrc
+To start vim w/o config, plugins - vim --clean
+To do vim reloading file automatically :set autoread
+
+Print value of variable, :echo &var. Ex: :echo &ft
+You can also do something like
+if &filetype ==# 'c' || &filetype ==# 'cpp'
+  setlocal noexpandtab
+endif
+
+AutoCmd - Runs commands when rules are matched
+au/autocmd <<events>> <<filetypes>> <<command>>
+
+Set filetype as yaml when *.yaml or *.yml is loaded into vim
+autocmd BufNewFile,BufRead *.yaml,*.yml setf yaml
+BufNewFile, BufRead are events
+
+autocmd BufReadPost,FileReadPost,BufNewFile * call system("tmux rename-window " . expand("%:t"))
+autocmd VimLeave * call system("tmux rename-window ". fnamemodify(getcwd(), ':t'))
+
+For inventory files which contains IPs, word definition should include "." 
+so that search for current word using # or <leader>w includes complete IP and search works better
+autocmd FileType dosini set iskeyword=65-90,95,97-122,48-57,46 "the same: a-z,_,A-Z,0-9,.
+
+map - recursive, noremp - no recursive map
+If you want map to work in few vim modes only, then restrict it!
+n = normal, v = visual+select, o = operator, i = insert, c = commandline
+
+map k h
+map h g // h = g and resolve further. So, maps k to g
+noremap h p // h = p but don't resolve further. But still k = p
+noremap p l // doesn't map k to l
+
+nnoremap G gg
+noremap <C-p> :CtrlP<CR>
+nnoremap <leader>g :Ack
+<leader> <cr>/<CR> <C-n> <S-Enter> <Esc> <space> 
+
+nmap <S-Enter> O<Esc>j
+nmap <CR> o<Esc>k
+
+Options/Variables
+Can be boolean or key=value
+To print all options set, use :verbose set
+To set option of type key=value, use set filetype=json
+To set boolean option, use set ic or set noic
+Options can be set using "let" also. But "set" is preferred
+let &filetype=json
+"let" is used to set options, variables, registers, environment variables
+
+To assign a value to a variable, "let" is preferred
+let g:foo=50 // g=global
+----------------------------------------------------------------------------------------------------------------------------------
+Plugins
+Tablular - Good for indentation - Aligning assignments (= :) Tables etc
+Fugitive
+:Git or :G (similar to :!git)
+* Commands
+:Git (Git status)
+:Git add
+:Git diff
+:Git commit
+:Git log
+:Git blame
+:Gedit HEAD~3:% loads the current file as it existed 3 commits ago
+:Gdiffsplit
+:Gread, :Gwrite, :Ggrep, :GMove, :GDelete, :GBrowse
+:Glog -- % # Load revisions in buffer
+:copen # Browse through them using quick fix list
+:Gblame
