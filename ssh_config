@@ -1,0 +1,14 @@
+Host *
+User rajesh.kaki
+ AddKeysToAgent yes
+ UseKeychain yes
+ IdentityFile ~/.ssh/id_rsa
+
+
+TCPKeepAlive=yes
+ServerAliveInterval=60
+ServerAliveCountMax=20
+StrictHostKeyChecking=no
+Compression=yes
+ForwardAgent=yes
+Include jumphost/default
